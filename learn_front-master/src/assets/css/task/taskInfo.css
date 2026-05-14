@@ -1,0 +1,284 @@
+.taskInfo {
+    width: 100%;
+    height: 100%;
+}
+.taskInfo-content {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #FBFADA 0%, #e8f0e0 100%);
+    padding-bottom: 40px;
+}
+.taskInfo-name {
+    width: 75%;
+    height: 100%;
+}
+.taskInfo-desc {
+    padding-top: 30px;
+    height: 10%;
+    overflow: hidden;
+}
+.taskInfo-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #12372A;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.taskInfo-title .el-button--warning {
+    color: #f5a623;
+    border-color: #f5a623;
+    background: transparent;
+}
+.taskInfo-title .el-button--success {
+    color: #436850;
+    border-color: #436850;
+    background: transparent;
+}
+.taskInfo-title1 {
+    margin-top: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #6c7a89;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.taskInfo-title1 .el-icon-info {
+    color: #ADBC9F;
+    cursor: pointer;
+}
+.taskInfo-list {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    gap: 20px;
+}
+.taskInfo-image {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.taskInfo-fengmian {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 20px;
+    width: 95%;
+    height: 83%;
+    box-shadow: 0 8px 32px rgba(18, 55, 42, 0.12);
+    border: 2px solid rgba(67, 104, 80, 0.1);
+}
+.taskInfo-btns {
+    width: 95%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.taskInfo-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(67, 104, 80, 0.2);
+    background: linear-gradient(135deg, rgba(251, 250, 218, 0.9) 0%, rgba(232, 240, 224, 0.9) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #436850;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(18, 55, 42, 0.08);
+}
+.taskInfo-icon:hover {
+    transform: translateY(-5px) scale(1.1);
+    background: linear-gradient(135deg, #436850 0%, #ADBC9F 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 8px 24px rgba(67, 104, 80, 0.3);
+}
+.taskInfo-icon:active {
+    transform: translateY(-2px) scale(1.05);
+}
+.taskInfo-video {
+    width: 30%;
+    height: 90%;
+    margin-top: 30px;
+    border: 2px solid rgba(67, 104, 80, 0.15);
+    border-radius: 16px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    box-shadow: 0 6px 24px rgba(18, 55, 42, 0.1);
+}
+.taskInfo-video::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+.taskInfo-video-item {
+    margin-top: 10px;
+    width: 97%;
+    height: 8%;
+    background: linear-gradient(135deg, rgba(251, 250, 218, 0.5) 0%, rgba(232, 240, 224, 0.5) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(67, 104, 80, 0.1);
+}
+.taskInfo-video-item:hover {
+    background: linear-gradient(135deg, #436850 0%, #ADBC9F 100%);
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(67, 104, 80, 0.25);
+}
+.taskInfo-video-item:hover .taskInfo-video-item1 {
+    color: #ffffff;
+}
+.taskInfo-video-item:hover .taskInfo-video-item2 {
+    color: #ffffff;
+}
+.taskInfo-video-item1 {
+    width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 12px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    color: #12372A;
+    transition: color 0.3s ease;
+}
+.taskInfo-video-item2 {
+    margin-right: 15px;
+    color: #436850;
+    transition: color 0.3s ease;
+}
+.taskInfo-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f0e0 0%, #FBFADA 100%);
+}
+.taskInfo-comment {
+    width: 75%;
+}
+.taskInfo-comment-font {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #12372A;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+}
+.taskInfo-comment-btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.taskInfo-comment-btn .el-button--success {
+    background: linear-gradient(135deg, #436850 0%, #ADBC9F 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.taskInfo-comment-btn .el-button--success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 104, 80, 0.3) !important;
+}
+.taskInfo-comment-list {
+    border: 2px solid rgba(67, 104, 80, 0.15);
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 6px 24px rgba(18, 55, 42, 0.08);
+}
+.taskInfo-comment-item {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    width: 95%;
+    display: flex;
+}
+.taskInfo-comment-item1 {
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    letter-spacing: 1px;
+    color: #436850;
+    font-weight: 600;
+}
+.taskInfo-comment-item2 {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    letter-spacing: 1px;
+    width: 75%;
+    line-height: 1.8;
+    background: linear-gradient(135deg, rgba(251, 250, 218, 0.8) 0%, rgba(232, 240, 224, 0.8) 100%);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #12372A;
+    border: 1px solid rgba(67, 104, 80, 0.1);
+}
+.taskInfo-comment-item3 {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif;
+    letter-spacing: 1px;
+    width: 100%;
+    background: linear-gradient(135deg, #436850 0%, #ADBC9F 100%);
+    color: #ffffff;
+    line-height: 1.8;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+.taskInfo-comment-item-right {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    margin-right: 5%;
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+}
+.taskInfo-comment-content .el-textarea__inner {
+    background: rgba(251, 250, 218, 0.5) !important;
+    border: 2px solid rgba(67, 104, 80, 0.2) !important;
+    border-radius: 12px !important;
+    color: #12372A !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft YaHei', sans-serif !important;
+    transition: all 0.3s ease !important;
+}
+.taskInfo-comment-content .el-textarea__inner::placeholder {
+    color: rgba(18, 55, 42, 0.4) !important;
+}
+.taskInfo-comment-content .el-textarea__inner:hover {
+    border-color: rgba(67, 104, 80, 0.4) !important;
+    background: rgba(251, 250, 218, 0.7) !important;
+}
+.taskInfo-comment-content .el-textarea__inner:focus {
+    border-color: #436850 !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(67, 104, 80, 0.15) !important;
+}

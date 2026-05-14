@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "spring.datasource.druid.master",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.ape.apeframework.config.DruidConfig",
+      "sourceMethod": "public javax.sql.DataSource masterDataSource(com.ape.apeframework.properties.DruidProperties) "
+    },
+    {
+      "name": "spring.datasource.druid.slave",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.ape.apeframework.config.DruidConfig",
+      "sourceMethod": "public javax.sql.DataSource slaveDataSource(com.ape.apeframework.properties.DruidProperties) "
+    },
+    {
+      "name": "system",
+      "type": "com.ape.apeframework.config.SystemConfig",
+      "sourceType": "com.ape.apeframework.config.SystemConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

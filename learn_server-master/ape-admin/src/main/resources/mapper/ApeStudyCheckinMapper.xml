@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apeadmin.mapper.ApeStudyCheckinMapper">
+  <resultMap id="BaseResultMap" type="com.ape.apeadmin.domain.ApeStudyCheckin">
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="checkin_date" property="checkinDate" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.ape.apeadmin.domain.ApeStudyCheckin">
+    insert into ape_study_checkin (id, user_id, checkin_date, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{checkinDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="selectCheckinDatesByUserId" resultType="java.lang.String">
+    select checkin_date from ape_study_checkin
+    where user_id = #{userId,jdbcType=VARCHAR}
+    order by checkin_date asc
+  </select>
+
+  <select id="countByUserIdAndDate" resultType="int">
+    select count(*) from ape_study_checkin
+    where user_id = #{userId,jdbcType=VARCHAR} and checkin_date = #{checkinDate,jdbcType=VARCHAR}
+  </select>
+</mapper>

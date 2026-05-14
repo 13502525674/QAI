@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.FunPhysicsMomentsMapper">
+    <select id="getPage" resultType="com.ape.apesystem.domain.FunPhysicsMoments">
+        select * from fun_physics_moments
+        <where>
+            1=1
+            <if test="ew.physicistName != null and ew.physicistName != ''">
+                and physicist_name like concat('%',#{ew.physicistName},'%')
+            </if>
+            <if test="ew.category != null">
+                and category = #{ew.category}
+            </if>
+            <if test="ew.status != null">
+                and status = #{ew.status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="getRandomMoments" resultType="com.ape.apesystem.domain.FunPhysicsMoments">
+        select * from fun_physics_moments
+        where status = 0
+        order by RAND()
+        limit #{count}
+    </select>
+</mapper>

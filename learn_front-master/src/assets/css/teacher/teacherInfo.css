@@ -1,0 +1,118 @@
+.teacherInfo {
+    width: 100%;
+    height: 100%;
+}
+.teacherInfo-content {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('../../../assets/image/index/index_back.png');
+}
+.teacherInfo-name {
+    width: 75%;
+    height: 100%;
+}
+.teacherInfo-desc {
+    padding-top: 2%;
+    height: 10%;
+    overflow: hidden;
+}
+.teacherInfo-title {
+    font-size: 20px;
+}
+.teacherInfo-title1 {
+    margin-top: 7px;
+    font-family: '黑体';
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #B8B8B9;
+    font-size: 14px;
+}
+.teacherInfo-list {
+    width: 100%;
+    height: 88%;
+    display: flex;
+}
+.teacherInfo-image {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.teacherInfo-fengmian {
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 2%;
+    width: 95%;
+    height: 90%;
+}
+.teacherInfo-btns {
+    width: 95%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.teacherInfo-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #EFF1F2;
+    background-color: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.teacherInfo-video {
+    width: 30%;
+    height: 90%;
+    margin-top: 1%;
+    border: 2px solid #EFF1F2;
+    border-radius: 7px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.teacherInfo-video::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+.teacherInfo-video-item {
+    margin-top: 7px;
+    width: 97%;
+    height: 8%;
+    background-color: #FAFAFA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: auto;
+}
+.teacherInfo-video-item1 {
+    width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 12px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: '黑体';
+}
+.teacherInfo-video-item2 {
+    margin-right: 15px;
+}
+.teacherInfo-title2 {
+    margin-top: 10px;
+    margin-left: 5px;
+    font-family: '黑体';
+    align-self: flex-start;
+}

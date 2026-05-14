@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.FunPhysicsPuzzleMapper">
+    <select id="getPage" resultType="com.ape.apesystem.domain.FunPhysicsPuzzle">
+        select * from fun_physics_puzzle
+        <where>
+            1=1
+            <if test="ew.title != null and ew.title != ''">
+                and title like concat('%',#{ew.title},'%')
+            </if>
+            <if test="ew.type != null">
+                and type = #{ew.type}
+            </if>
+            <if test="ew.difficulty != null">
+                and difficulty = #{ew.difficulty}
+            </if>
+            <if test="ew.branch != null and ew.branch != ''">
+                and branch = #{ew.branch}
+            </if>
+            <if test="ew.status != null">
+                and status = #{ew.status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="getRandomPuzzles" resultType="com.ape.apesystem.domain.FunPhysicsPuzzle">
+        select * from fun_physics_puzzle
+        <where>
+            status = 0
+            <if test="difficulty != null">
+                and difficulty = #{difficulty}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+        </where>
+        order by RAND()
+        limit #{count}
+    </select>
+</mapper>

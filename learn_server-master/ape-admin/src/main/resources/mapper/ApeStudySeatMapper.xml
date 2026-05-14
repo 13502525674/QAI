@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apeadmin.mapper.ApeStudySeatMapper">
+  <resultMap id="BaseResultMap" type="com.ape.apeadmin.domain.ApeStudySeat">
+    <id column="id" property="id" />
+    <result column="seat_id" property="seatId" />
+    <result column="user_id" property="userId" />
+    <result column="nickname" property="nickname" />
+    <result column="goal" property="goal" />
+    <result column="status" property="status" />
+    <result column="enter_time" property="enterTime" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, seat_id, user_id, nickname, goal, status, enter_time, create_time, update_time
+  </sql>
+
+  <select id="deleteByPrimaryKey" parameterType="java.lang.String" resultType="java.lang.Integer">
+    delete from ape_study_seat
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="com.ape.apeadmin.domain.ApeStudySeat">
+    insert into ape_study_seat (id, seat_id, user_id, 
+      nickname, goal, status, 
+      enter_time, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{seatId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{goal,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{enterTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.ape.apeadmin.domain.ApeStudySeat">
+    insert into ape_study_seat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="seatId != null">
+        seat_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="goal != null">
+        goal,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="enterTime != null">
+        enter_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="seatId != null">
+        #{seatId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="goal != null">
+        #{goal,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="enterTime != null">
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ape_study_seat
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ape.apeadmin.domain.ApeStudySeat">
+    update ape_study_seat
+    <set>
+      <if test="seatId != null">
+        seat_id = #{seatId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="goal != null">
+        goal = #{goal,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="enterTime != null">
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.ape.apeadmin.domain.ApeStudySeat">
+    update ape_study_seat
+    set seat_id = #{seatId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      goal = #{goal,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ape_study_seat
+  </select>
+
+  <select id="selectBySeatId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ape_study_seat
+    where seat_id = #{seatId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ape_study_seat
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ape_study_seat
+    where status = #{status,jdbcType=INTEGER}
+  </select>
+</mapper>

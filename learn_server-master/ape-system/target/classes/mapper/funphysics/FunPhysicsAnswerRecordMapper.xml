@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.FunPhysicsAnswerRecordMapper">
+    <select id="countCorrectByUser" resultType="int">
+        select count(*) from fun_physics_answer_record
+        where user_id = #{userId} and is_correct = 1
+    </select>
+
+    <select id="countCorrectByUserToday" resultType="int">
+        select count(*) from fun_physics_answer_record
+        where user_id = #{userId} and is_correct = 1
+        and date(challenge_date) = curdate()
+    </select>
+
+    <select id="getConsecutiveDays" resultType="int">
+        select count(distinct date(challenge_date)) as consecutive_days
+        from fun_physics_answer_record
+        where user_id = #{userId}
+        and date(challenge_date) >= date_sub(curdate(), interval 30 day)
+    </select>
+
+    <select id="getUserAnswerStats" resultType="java.util.Map">
+        select 
+            type,
+            count(*) as total_count,
+            sum(case when is_correct = 1 then 1 else 0 end) as correct_count
+        from fun_physics_answer_record
+        where user_id = #{userId}
+        group by type
+    </select>
+    
+    <select id="countDistinctChallengeDates" resultType="int">
+        select count(distinct challenge_date) 
+        from fun_physics_answer_record
+        where user_id = #{userId}
+    </select>
+</mapper>

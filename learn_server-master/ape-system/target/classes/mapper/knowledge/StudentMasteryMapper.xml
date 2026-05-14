@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.StudentMasteryMapper">
+
+    <resultMap id="StudentMasteryResult" type="com.ape.apesystem.domain.StudentMastery">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="kpId" column="kp_id"/>
+        <result property="masteryScore" column="mastery_score"/>
+        <result property="practiceCount" column="practice_count"/>
+        <result property="correctCount" column="correct_count"/>
+        <result property="videoProgress" column="video_progress"/>
+        <result property="lastPracticeTime" column="last_practice_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="kpName" column="kp_name"/>
+        <result property="studentName" column="student_name"/>
+        <result property="branch" column="branch"/>
+    </resultMap>
+
+    <select id="selectByStudentId" resultMap="StudentMasteryResult">
+        SELECT sm.*, kp.name as kp_name, kp.branch as branch, u.user_name as student_name
+        FROM student_mastery sm
+        LEFT JOIN knowledge_point kp ON sm.kp_id = kp.id
+        LEFT JOIN ape_user u ON sm.student_id = u.id
+        WHERE sm.student_id = #{studentId}
+        ORDER BY sm.mastery_score DESC
+    </select>
+
+    <select id="selectByStudentAndKp" resultMap="StudentMasteryResult">
+        SELECT sm.*, kp.name as kp_name, kp.branch as branch
+        FROM student_mastery sm
+        LEFT JOIN knowledge_point kp ON sm.kp_id = kp.id
+        WHERE sm.student_id = #{studentId} AND sm.kp_id = #{kpId}
+    </select>
+
+    <select id="selectMasteryByBranch" resultType="java.util.Map">
+        SELECT kp.branch as branch, AVG(sm.mastery_score) as avgMastery
+        FROM student_mastery sm
+        LEFT JOIN knowledge_point kp ON sm.kp_id = kp.id
+        WHERE sm.student_id = #{studentId} AND kp.branch IS NOT NULL
+        GROUP BY kp.branch
+    </select>
+
+    <select id="selectWeakPoints" resultMap="StudentMasteryResult">
+        SELECT sm.*, kp.name as kp_name, kp.branch as branch
+        FROM student_mastery sm
+        LEFT JOIN knowledge_point kp ON sm.kp_id = kp.id
+        WHERE sm.student_id = #{studentId}
+        ORDER BY sm.mastery_score ASC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectStrongPoints" resultMap="StudentMasteryResult">
+        SELECT sm.*, kp.name as kp_name, kp.branch as branch
+        FROM student_mastery sm
+        LEFT JOIN knowledge_point kp ON sm.kp_id = kp.id
+        WHERE sm.student_id = #{studentId}
+        ORDER BY sm.mastery_score DESC
+        LIMIT #{limit}
+    </select>
+
+    <update id="updateMasteryScore">
+        UPDATE student_mastery 
+        SET mastery_score = #{masteryScore}, update_time = NOW()
+        WHERE student_id = #{studentId} AND kp_id = #{kpId}
+    </update>
+
+    <update id="incrementPracticeCount">
+        UPDATE student_mastery 
+        SET practice_count = practice_count + 1,
+            correct_count = correct_count + CASE WHEN #{correct} = true THEN 1 ELSE 0 END,
+            last_practice_time = NOW(),
+            update_time = NOW()
+        WHERE student_id = #{studentId} AND kp_id = #{kpId}
+    </update>
+
+</mapper>

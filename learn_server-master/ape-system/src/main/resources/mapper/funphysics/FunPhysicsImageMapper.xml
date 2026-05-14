@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.FunPhysicsImageMapper">
+    <select id="getPublicGallery" resultType="com.ape.apesystem.domain.FunPhysicsImage">
+        select i.*, u.user_name
+        from fun_physics_image i
+        left join ape_user u on i.user_id = u.id
+        where i.is_public = 1 and i.status = 0
+        order by i.create_time desc
+    </select>
+
+    <select id="getHotImages" resultType="com.ape.apesystem.domain.FunPhysicsImage">
+        select i.*, u.user_name
+        from fun_physics_image i
+        left join ape_user u on i.user_id = u.id
+        where i.likes_count > 0 and i.status = 0
+        order by i.likes_count desc, i.create_time desc
+        limit #{count}
+    </select>
+</mapper>

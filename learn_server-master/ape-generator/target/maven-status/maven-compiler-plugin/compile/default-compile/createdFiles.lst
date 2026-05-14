@@ -1,0 +1,8 @@
+com\ape\apegenerator\GenApiCode.class
+com\ape\apegenerator\GenServiceCode.class
+com\ape\apegenerator\GenAddCode.class
+com\ape\apegenerator\GenControllerCode.class
+com\ape\apegenerator\GenUpdateCode.class
+com\ape\apegenerator\GenDomainCode.class
+com\ape\apegenerator\GenIndexCode.class
+com\ape\apegenerator\GenMapperCode.class

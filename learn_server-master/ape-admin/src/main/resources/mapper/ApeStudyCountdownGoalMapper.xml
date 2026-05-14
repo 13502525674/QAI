@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apeadmin.mapper.ApeStudyCountdownGoalMapper">
+  <resultMap id="BaseResultMap" type="com.ape.apeadmin.domain.ApeStudyCountdownGoal">
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="goal_name" property="goalName" />
+    <result column="goal_date" property="goalDate" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.ape.apeadmin.domain.ApeStudyCountdownGoal">
+    insert into ape_study_countdown_goal (id, user_id, goal_name, goal_date, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{goalName,jdbcType=VARCHAR}, #{goalDate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select id, user_id, goal_name, goal_date, create_time from ape_study_countdown_goal
+    where user_id = #{userId,jdbcType=VARCHAR}
+    order by goal_date asc
+  </select>
+
+  <delete id="deleteByPrimaryKey">
+    delete from ape_study_countdown_goal where id = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>

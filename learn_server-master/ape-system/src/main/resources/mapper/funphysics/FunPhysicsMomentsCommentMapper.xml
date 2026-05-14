@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.FunPhysicsMomentsCommentMapper">
+    <select id="getCommentsByMomentsId" resultType="com.ape.apesystem.domain.FunPhysicsMomentsComment">
+        select c.*, 
+               COALESCE(u.user_name, c.commenter_name) as user_name, 
+               CASE 
+                   WHEN c.commenter_avatar IS NOT NULL AND c.commenter_avatar != '' THEN c.commenter_avatar
+                   WHEN u.avatar IS NOT NULL THEN CAST(u.avatar AS CHAR)
+                   ELSE NULL
+               END as avatar
+        from fun_physics_moments_comment c
+        left join ape_user u on c.user_id = u.id
+        where c.moments_id = #{momentsId}
+        order by c.create_time asc
+    </select>
+</mapper>

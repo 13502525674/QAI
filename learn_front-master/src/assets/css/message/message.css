@@ -1,0 +1,86 @@
+.message {
+    width: 100%;
+    height: 100%;
+}
+.message-page-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('../../../assets/image/index/index_back.png');
+}
+.message-page-title {
+    width: 70%;
+    margin-top: 30px;
+    font-size: 25px;
+    font-family: '黑体';
+    letter-spacing: 3px;
+}
+.message-page-font::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+.message-page-list {
+    margin-top: 30px;
+    width: 70%;
+}
+.message-page-top {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.messsage-page-huifu {
+    margin-left: 20px;
+    width: 100%;
+    margin-top: 10px;
+    line-height: 25px;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+.messsage-page-time {
+    margin-left: 20px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+.message-page-item {
+    margin-top: 15px;
+    font-size: 15px;
+    font-family: '黑体';
+    border-radius: 7px;
+    background-color: #EAECFE;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.message-page-fenye {
+    margin-top: 10px;
+    width: 70%;
+}
+.message-page-desc {
+    letter-spacing: 2px;
+    line-height: 25px;
+    margin: 20px 20px;
+}
+.message-page-bottom {
+    width: 70%;
+    margin-top: 10px;
+}
+.message-page-add {
+    margin-top: 30px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 70%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: '黑体';
+}
+.message-page-btns {
+    margin-top: 10px;
+}

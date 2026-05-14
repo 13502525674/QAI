@@ -1,0 +1,190 @@
+.test {
+    width: 100%;
+    height: 100%;
+}
+.test-page-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('../../../assets/image/index/index_back.png');
+}
+.test-page-title {
+    width: 70%;
+    margin-top: 30px;
+    font-size: 26px;
+    font-family: '黑体';
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #1f2937;
+    position: relative;
+    padding-left: 16px;
+}
+.test-page-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 26px;
+    background: linear-gradient(180deg, #60a5fa, #3b82f6);
+    border-radius: 2px;
+}
+.test-page-list {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.test-page-list div:nth-child(4n+1) {
+    background: url('../../image/testP/t1.jpg');
+    background-size: 100%
+}
+.test-page-list div:nth-child(4n+2) {
+    background: url('../../image/testP/t2.jpg');
+    background-size: 100%
+}
+.test-page-list div:nth-child(4n+3) {
+    background: url('../../image/testP/t3.jpg');
+    background-size: 100%
+}
+.test-page-list div:nth-child(4n) {
+    background: url('../../image/testP/t4.jpg');
+    background-size: 100%
+}
+.test-page-item {
+    margin-top: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    width: 32%;
+    height: 300px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.test-page-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.14);
+}
+.test-page-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 10px;
+    z-index: 0;
+}
+.test-page-item>span {
+    position: relative;
+    z-index: 1;
+}
+.test-page-item span:nth-child(1) {
+    margin-top: 20px;
+}
+.test-page-item>span {
+    color: #1f2937;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-left: 20px;
+    font-size: 16px;
+    font-family: '黑体';
+    margin-top: 5px;
+}
+.test-page-desc {
+    margin-top: 30px;
+    width: 70%;
+    min-height: 250px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 2px solid rgba(96, 165, 250, 0.12);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.08);
+    display: flex;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+}
+.test-page-desc::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6, #93c5fd);
+}
+.test-page-image {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.test-page-num {
+    font-family: '黑体';
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid #bfdbfe;
+    padding-right: 20px;
+}
+.test-page-num1 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #1e40af;
+    font-weight: 700;
+}
+.test-page-num2 {
+    margin-top: 16px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #2563eb;
+}
+.test-page-font {
+    display: flex;
+    width: 75%;
+    justify-content: space-between;
+    font-family: '黑体';
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.9;
+    padding-left: 20px;
+}
+.test-page-font1 {
+    margin-top: 0;
+    width: 49%;
+}
+.test-page-font2 {
+    margin-top: 32px;
+    width: 49%;
+}
+.test-page-fenye {
+    margin-top: 10px;
+    width: 70%;
+}
+.test-bottom-image {
+    width: 70%;
+    margin-top: 10px;
+}
+.test-page-item .el-button--success {
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 13px;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border: none;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.test-page-item .el-button--success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(59, 130, 246, 0.4);
+}

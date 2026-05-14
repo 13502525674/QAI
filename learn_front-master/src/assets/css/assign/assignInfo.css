@@ -1,0 +1,46 @@
+.assignInfo {
+    width: 100%;
+    height: 100%;
+}
+.assignInfo-content {
+    background: url('../../../assets/image/index/index_back.png');
+    width: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.assignInfo-top {
+    width: 70%;
+}
+.assignInfo-title {
+    font-size: 20px;
+    font-family: '黑体';
+    margin-top: 30px;
+}
+.assignInfo-state {
+    font-size: 15px;
+    font-family: '黑体';
+    color: #92969B;
+    margin-top: 10px;
+}
+.assignInfo-list {
+    margin-top: 20px;
+    border-radius: 7px;
+    border: 2px solid #EFF1F2;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+.assignInfo-item {
+    margin-top: 10px;
+    width: 98%;
+    background-color: #FAFAFA;
+    border-radius: 7px;
+    font-family: '黑体';
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.KnowledgeRelationMapper">
+
+    <resultMap id="KnowledgeRelationResult" type="com.ape.apesystem.domain.KnowledgeRelation">
+        <id property="id" column="id"/>
+        <result property="fromKpId" column="from_kp_id"/>
+        <result property="toKpId" column="to_kp_id"/>
+        <result property="relationType" column="relation_type"/>
+        <result property="weight" column="weight"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="fromKpName" column="from_kp_name"/>
+        <result property="toKpName" column="to_kp_name"/>
+    </resultMap>
+
+    <select id="selectByFromKpId" resultMap="KnowledgeRelationResult">
+        SELECT kr.*, 
+               kp1.name as from_kp_name,
+               kp2.name as to_kp_name
+        FROM knowledge_relation kr
+        LEFT JOIN knowledge_point kp1 ON kr.from_kp_id = kp1.id
+        LEFT JOIN knowledge_point kp2 ON kr.to_kp_id = kp2.id
+        WHERE kr.from_kp_id = #{fromKpId}
+    </select>
+
+    <select id="selectByToKpId" resultMap="KnowledgeRelationResult">
+        SELECT kr.*, 
+               kp1.name as from_kp_name,
+               kp2.name as to_kp_name
+        FROM knowledge_relation kr
+        LEFT JOIN knowledge_point kp1 ON kr.from_kp_id = kp1.id
+        LEFT JOIN knowledge_point kp2 ON kr.to_kp_id = kp2.id
+        WHERE kr.to_kp_id = #{toKpId}
+    </select>
+
+    <select id="selectByRelationType" resultMap="KnowledgeRelationResult">
+        SELECT kr.*, 
+               kp1.name as from_kp_name,
+               kp2.name as to_kp_name
+        FROM knowledge_relation kr
+        LEFT JOIN knowledge_point kp1 ON kr.from_kp_id = kp1.id
+        LEFT JOIN knowledge_point kp2 ON kr.to_kp_id = kp2.id
+        WHERE kr.relation_type = #{relationType}
+    </select>
+
+    <select id="selectAllWithNames" resultMap="KnowledgeRelationResult">
+        SELECT kr.*, 
+               kp1.name as from_kp_name,
+               kp2.name as to_kp_name
+        FROM knowledge_relation kr
+        LEFT JOIN knowledge_point kp1 ON kr.from_kp_id = kp1.id
+        LEFT JOIN knowledge_point kp2 ON kr.to_kp_id = kp2.id
+    </select>
+
+</mapper>

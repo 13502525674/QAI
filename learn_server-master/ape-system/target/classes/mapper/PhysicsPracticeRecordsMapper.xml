@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.PhysicsPracticeRecordsMapper">
+
+    <select id="getUserRecordsWithDetails" resultType="java.util.Map">
+        SELECT r.id,
+               r.user_id as userId,
+               r.paper_id as paperId,
+               r.user_answers as userAnswers,
+               r.submitted_at as submittedAt,
+               r.score,
+               r.status,
+               r.grader_id as graderId,
+               r.graded_at as gradedAt,
+               p.paper_title as paperTitle,
+               p.subject_branch as subjectBranch,
+               p.question_content as questionContent
+        FROM physics_practice_records r
+        LEFT JOIN physics_question_paper p ON r.paper_id = p.id
+        WHERE r.user_id = #{userId}
+        <if test="paperId != null and paperId != ''">
+            AND r.paper_id = #{paperId}
+        </if>
+        ORDER BY r.submitted_at DESC
+    </select>
+
+</mapper>

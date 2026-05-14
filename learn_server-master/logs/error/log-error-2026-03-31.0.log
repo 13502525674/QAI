@@ -1,0 +1,16 @@
+2026-03-31 00:02:43.049 [http-nio-8080-exec-83] ERROR com.alibaba.druid.filter.stat.StatFilter - slow sql 1035 millis. SELECT  id,name,type,method,request_type,oper_type,oper_user_id,oper_user_name,oper_user_account,oper_time,oper_url,oper_ip,oper_location,oper_param,result_param,state,error_msg  FROM ape_operate_log           ORDER BY oper_time DESC LIMIT ? [10]
+2026-03-31 23:51:39.651 [restartedMain] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field apeUserService in com.ape.apeframework.config.ShiroRealm required a bean of type 'com.ape.apesystem.service.ApeUserService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.ape.apesystem.service.ApeUserService' in your configuration.
+

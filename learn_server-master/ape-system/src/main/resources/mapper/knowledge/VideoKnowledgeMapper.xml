@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ape.apesystem.mapper.VideoKnowledgeMapper">
+
+    <resultMap id="VideoKnowledgeResult" type="com.ape.apesystem.domain.VideoKnowledge">
+        <id property="id" column="id"/>
+        <result property="chapterId" column="chapter_id"/>
+        <result property="kpId" column="kp_id"/>
+        <result property="weight" column="weight"/>
+        <result property="createTime" column="create_time"/>
+        <result property="kpName" column="kp_name"/>
+        <result property="chapterName" column="chapter_name"/>
+    </resultMap>
+
+    <select id="selectByChapterId" resultMap="VideoKnowledgeResult">
+        SELECT vk.*, kp.name as kp_name, ac.name as chapter_name
+        FROM video_knowledge vk
+        LEFT JOIN knowledge_point kp ON vk.kp_id = kp.id
+        LEFT JOIN ape_chapter ac ON vk.chapter_id = ac.id
+        WHERE vk.chapter_id = #{chapterId}
+    </select>
+
+    <select id="selectByKpId" resultMap="VideoKnowledgeResult">
+        SELECT vk.*, kp.name as kp_name, ac.name as chapter_name
+        FROM video_knowledge vk
+        LEFT JOIN knowledge_point kp ON vk.kp_id = kp.id
+        LEFT JOIN ape_chapter ac ON vk.chapter_id = ac.id
+        WHERE vk.kp_id = #{kpId}
+    </select>
+
+    <delete id="deleteByChapterId">
+        DELETE FROM video_knowledge WHERE chapter_id = #{chapterId}
+    </delete>
+
+</mapper>
