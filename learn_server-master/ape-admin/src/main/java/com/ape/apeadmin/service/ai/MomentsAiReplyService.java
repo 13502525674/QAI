@@ -6,6 +6,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class MomentsAiReplyService {
     private static final Logger log = LoggerFactory.getLogger(MomentsAiReplyService.class);
 
     @Autowired
+    @Qualifier("creativeChatClient")
     private ChatClient chatClient;
 
     @Value("classpath:prompts/moments_ai_reply.txt")

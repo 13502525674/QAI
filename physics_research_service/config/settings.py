@@ -39,9 +39,10 @@ class Settings(BaseSettings):
     pg_database: str = "physics_rag"
 
     # --- LangSmith (可选) ---
-    langchain_tracing_v2: bool = False
+    # P0-3: 默认开启 trace（设为 True，需要填 API Key）
+    langchain_tracing_v2: bool = True
     langchain_api_key: str = ""
-    langchain_project: str = "physics-research"
+    langchain_project: str = "physics-research-prod"
 
     # --- 服务 ---
     service_host: str = "0.0.0.0"

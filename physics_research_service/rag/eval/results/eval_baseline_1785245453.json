@@ -1,0 +1,12 @@
+{
+  "mode": "baseline",
+  "test_set_size": 50,
+  "recall@5": 0.98,
+  "recall@10": 1.0,
+  "mrr": 0.96,
+  "context_precision@5": 0.196,
+  "ndcg@5": 0.9626,
+  "latency_p50_ms": 311.5,
+  "latency_p99_ms": 357.1,
+  "latency_avg_ms": 282.3
+}

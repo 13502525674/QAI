@@ -55,11 +55,10 @@ com\ape\apeadmin\service\ai\XunfeiSpeechService$Cw.class
 com\ape\apeadmin\service\ai\XunfeiTtsService$JsonParse.class
 com\ape\apeadmin\service\ApePhysicsLawFavorService.class
 com\ape\apeadmin\controller\log\ApeLoginLogController.class
+com\ape\apeadmin\controller\monitor\SystemMonitorController.class
 com\ape\apeadmin\controller\chat\ChatController.class
 com\ape\apeadmin\controller\funphysics\FunPhysicsText2ImageController.class
 com\ape\apeadmin\controller\knowledge\KnowledgeGraphController.class
-com\ape\apeadmin\domain\ApeDeskmateMessage.class
-com\ape\apeadmin\mapper\ApeDeskmateMessageMapper.class
 com\ape\apeadmin\controller\task\ApeTaskController.class
 com\ape\apeadmin\service\ai\XunfeiTtsStreamService$JsonParse.class
 com\ape\apeadmin\service\ai\AiAssistantService.class
@@ -73,7 +72,6 @@ com\ape\apeadmin\config\WebSocketConfig.class
 com\ape\apeadmin\controller\GlobalExceptionHandler.class
 com\ape\apeadmin\controller\chapter\ApeChapterVideoController.class
 com\ape\apeadmin\controller\funphysics\FunPhysicsMomentsController.class
-com\ape\apeadmin\service\impl\ApeDeskmateMessageServiceImpl.class
 com\ape\apeadmin\service\ai\XunfeiSpeechService.class
 com\ape\apeadmin\service\ApeChatMessageService.class
 com\ape\apeadmin\service\ApeNotebookRecordService.class
@@ -83,6 +81,7 @@ com\ape\apeadmin\service\ApeStudySeatService.class
 com\ape\apeadmin\controller\physics\DocumentParseController.class
 com\ape\apeadmin\service\ApeStudyTodoService.class
 com\ape\apeadmin\service\ai\impl\RAGServiceImpl.class
+com\ape\apeadmin\domain\SystemLoadInfo.class
 com\ape\apeadmin\mapper\ApeChatMessageMapper.class
 com\ape\apeadmin\controller\physics\PhysicsPracticeRecordsController.class
 com\ape\apeadmin\service\ai\XunfeiSpeechService$1.class
@@ -114,7 +113,6 @@ com\ape\apeadmin\service\ai\impl\AiAssistantServiceImpl.class
 com\ape\apeadmin\service\ai\XunfeiSpeechService$JsonParse.class
 com\ape\apeadmin\service\impl\ApeNotebookRecordServiceImpl.class
 com\ape\apeadmin\config\ai\SaaLLMConfig.class
-com\ape\apeadmin\service\ApeDeskmateMessageService.class
 com\ape\apeadmin\mapper\ApePhysicsLawFavorMapper.class
 com\ape\apeadmin\service\ai\tools\PhysicsTools$CreateQuestionPaperRequest.class
 com\ape\apeadmin\controller\task\ApeTaskFavorController.class

@@ -15,6 +15,9 @@ class InterdisciplinaryResearcher(BaseAgent):
     agent_name = "interdisciplinary_researcher"
     agent_label = "跨学科研究者"
 
+    # P1-8: 跨学科研究用中等模型 + 高 temperature
+    TASK_TYPE = "interdisciplinary"
+
     def _get_temperature(self) -> float:
         return 0.7
 

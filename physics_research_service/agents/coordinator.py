@@ -17,6 +17,9 @@ class ResearchCoordinator(BaseAgent):
     agent_name = "coordinator"
     agent_label = "研究协调员"
 
+    # P1-8: 场景识别/任务分解用便宜模型
+    TASK_TYPE = "scene_recognition"
+
     # Agent 能力描述（供协调员参考调度）
     AGENT_CAPABILITIES = {
         "theoretical_physicist": "理论物理推演、假设构建、文献综述的理论部分",

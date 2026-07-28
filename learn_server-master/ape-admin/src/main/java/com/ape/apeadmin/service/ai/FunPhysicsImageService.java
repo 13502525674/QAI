@@ -1,16 +1,15 @@
 package com.ape.apeadmin.service.ai;
 
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
-import com.ape.apecommon.domain.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.image.ImageModel;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -26,19 +25,13 @@ public class FunPhysicsImageService {
     private static final Logger log = LoggerFactory.getLogger(FunPhysicsImageService.class);
 
     private static final String IMAGE_MODEL = "wanx2.1-t2i-turbo";
-    // qwen-max is the default for chat if not specified, but good to be explicit if needed. 
-    // However, spring-ai-alibaba usually defaults to qwen-turbo or plus. 
-    // The user asked to call "qwen3-max". 
-    // Assuming the ChatClient is configured to use the model defined in application.yml (qwen3-max).
 
     @Autowired
     private ImageModel imageModel;
 
     @Autowired
+    @Qualifier("creativeChatClient")
     private ChatClient chatClient;
-
-    @Autowired
-    private ChatMemory chatMemory;
 
     @Value("${funphysics.image.save-path:img/funphysics}")
     private String imageSavePath;
@@ -114,7 +107,6 @@ public class FunPhysicsImageService {
             String prompt = chatClient.prompt()
                     .system(systemPrompt)
                     .user(userMessage)
-                    .advisors(new MessageChatMemoryAdvisor(chatMemory))
                     .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, conversationId)
                             .param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                     .call()
@@ -152,7 +144,6 @@ public class FunPhysicsImageService {
              return chatClient.prompt()
                     .system(systemPrompt)
                     .user(userMessage)
-                    .advisors(new MessageChatMemoryAdvisor(chatMemory))
                     .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, conversationId)
                             .param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                     .call()

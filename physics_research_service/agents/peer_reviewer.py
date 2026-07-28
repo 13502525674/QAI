@@ -15,6 +15,9 @@ class AcademicPeerReviewer(BaseAgent):
     agent_name = "peer_reviewer"
     agent_label = "同行评审人"
 
+    # P1-8: 评审用旗舰模型保证质量
+    TASK_TYPE = "peer_review"
+
     def _get_temperature(self) -> float:
         return 0.2
 

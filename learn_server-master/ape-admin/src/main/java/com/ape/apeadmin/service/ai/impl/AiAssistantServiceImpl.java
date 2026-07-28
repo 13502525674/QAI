@@ -11,18 +11,17 @@ import com.ape.apesystem.service.PhysicsQuestionPaperService;
 import com.ape.apesystem.service.ApeTaskService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class AiAssistantServiceImpl implements AiAssistantService {
@@ -45,6 +44,10 @@ public class AiAssistantServiceImpl implements AiAssistantService {
     @Autowired
     private ApeTaskService apeTaskService;
 
+    @Autowired
+    @Qualifier("recommendChatClient")
+    private ChatClient recommendChatClient;
+
     public AiAssistantServiceImpl(ChatClient chatClient, ChatMemory chatMemory) {
         this.chatClient = chatClient;
         this.chatMemory = chatMemory;
@@ -61,7 +64,6 @@ public class AiAssistantServiceImpl implements AiAssistantService {
                 .system(systemPrompt)
                 .user(message)
                 .functions("calculateFormula", "searchKnowledge", "checkProgress", "correctExamPaper", "createPhysicsQuestionPaper")
-                .advisors(new MessageChatMemoryAdvisor(chatMemory))
                 .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, conversationId)
                         .param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .stream()
@@ -79,7 +81,6 @@ public class AiAssistantServiceImpl implements AiAssistantService {
                         .system(systemPrompt)
                         .user(message)
                         .functions("calculateFormula", "searchKnowledge", "checkProgress", "correctExamPaper", "createPhysicsQuestionPaper")
-                        .advisors(new MessageChatMemoryAdvisor(chatMemory))
                         .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, conversationId)
                                 .param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                         .call()
@@ -194,11 +195,10 @@ public class AiAssistantServiceImpl implements AiAssistantService {
             "3. 解释每个推荐的理由\n" +
             "请确保推荐内容来自平台已有资源，并给出具体的试卷名称或课程名称。");
         
-        return chatClient.prompt()
+        return recommendChatClient.prompt()
                 .system(systemPrompt)
                 .user(prompt)
                 .functions("calculateFormula", "searchKnowledge", "checkProgress", "correctExamPaper", "createPhysicsQuestionPaper")
-                .advisors(new MessageChatMemoryAdvisor(chatMemory))
                 .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, conversationId)
                         .param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .stream()

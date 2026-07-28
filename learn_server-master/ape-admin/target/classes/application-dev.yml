@@ -89,7 +89,7 @@ spring:
       api-key: ${aliQwen-api}
       chat:
         options:
-          model: qwen3-max
+          model: qwen3.7-max
           temperature: 0.7
           # 连接超时与读取超时设置 (单位: 毫秒)
           connect-timeout: 30000

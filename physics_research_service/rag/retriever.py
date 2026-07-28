@@ -211,12 +211,13 @@ class RAGRetriever:
         hits = sum(1 for kw in keywords if kw in text_lower)
         return hits / len(keywords)
 
-    def retrieve(self, query: str, top_k: int = 5) -> List[str]:
+    def retrieve(self, query: str, top_k: int = 5, use_reranker: bool = False) -> List[str]:
         """检索相关文献
 
         Args:
             query: 检索查询
             top_k: 返回结果数
+            use_reranker: 是否启用 Reranker 重排序（P0-2 优化）
 
         Returns:
             文献摘要列表
@@ -225,10 +226,39 @@ class RAGRetriever:
         if self._vector_available:
             embeddings = self._embed([query])
             if embeddings:
-                results = self._store.search(embeddings[0], top_k)
+                # 如果启用 reranker，先多召回 4 倍文档给 reranker 用
+                recall_k = top_k * 4 if use_reranker else top_k
+                results = self._store.search(embeddings[0], recall_k)
                 if results:
+                    # P0-2: Reranker 重排序
+                    if use_reranker:
+                        try:
+                            from rag.reranker import RerankerService
+                            reranker = RerankerService.get_instance()
+                            if reranker.available:
+                                documents = [text for _, text, _ in results]
+                                ranked = reranker.rerank(query, documents, top_k)
+                                formatted = []
+                                for i, (text, score) in enumerate(ranked):
+                                    # 找到原始 doc_id
+                                    doc_id = "reranked"
+                                    for did, dtext, _ in results:
+                                        if dtext == text:
+                                            doc_id = did
+                                            break
+                                    formatted.append(
+                                        f"[文献 {doc_id}] (重排相关度: {score:.4f})\n{text[:500]}"
+                                    )
+                                    logger.info(f"[RAG] Reranker 第{i+1}名: score={score:.4f}")
+                                return formatted
+                            else:
+                                logger.warning("[RAG] Reranker 不可用，降级到向量检索")
+                        except Exception as e:
+                            logger.warning(f"[RAG] Reranker 失败，降级: {e}")
+
+                    # baseline: 直接返回向量检索结果
                     formatted = []
-                    for doc_id, text, score in results:
+                    for doc_id, text, score in results[:top_k]:
                         formatted.append(
                             f"[文献 {doc_id}] (向量相关度: {score:.4f})\n{text[:500]}"
                         )

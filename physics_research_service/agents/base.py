@@ -18,10 +18,17 @@ logger = logging.getLogger(__name__)
 
 
 class BaseAgent(ABC):
-    """所有专业 Agent 的基类 — 支持 mock_mode 节省 token"""
+    """所有专业 Agent 的基类 — 支持 mock_mode 节省 token
+
+    P1-8: 三级模型路由 — 子类设置 TASK_TYPE 自动选择模型
+    P1-11: ReAct 5 级降级 — 空结果智能处理
+    """
 
     agent_name: str = "base"
     agent_label: str = "基础 Agent"
+
+    # P1-8: 任务类型 — 子类覆盖以启用模型路由
+    TASK_TYPE: str = "react_reasoning"
 
     def __init__(self):
         self.settings = get_settings()
@@ -33,15 +40,25 @@ class BaseAgent(ABC):
 
     @property
     def llm(self) -> BaseChatModel:
-        """延迟初始化 LLM — mock_mode 时使用便宜模型"""
+        """延迟初始化 LLM — P1-8 三级模型路由"""
         if self._llm is None:
-            model = self.settings.test_model_name if self.settings.mock_mode else self.settings.dashscope_model_name
-            self._llm = ChatOpenAI(
-                model=model,
-                openai_api_key=self.settings.dashscope_api_key,
-                openai_api_base=self.settings.dashscope_base_url,
-                temperature=self._get_temperature(),
-            )
+            # P1-8: 优先用 ModelRouter 路由
+            try:
+                from agents.model_router import ModelRouter
+                router = ModelRouter.get_instance()
+                self._llm = router.get_model(self.TASK_TYPE)
+                config = router.get_config(self.TASK_TYPE)
+                logger.info(f"[{self.agent_name}] 模型路由: {config['model']} (L{config['level']})")
+            except Exception as e:
+                # 降级到原逻辑
+                logger.warning(f"[{self.agent_name}] 模型路由失败，降级: {e}")
+                model = self.settings.test_model_name if self.settings.mock_mode else self.settings.dashscope_model_name
+                self._llm = ChatOpenAI(
+                    model=model,
+                    openai_api_key=self.settings.dashscope_api_key,
+                    openai_api_base=self.settings.dashscope_base_url,
+                    temperature=self._get_temperature(),
+                )
         return self._llm
 
     def _mock_response(self, task: str) -> str:
@@ -93,6 +110,7 @@ class BaseAgent(ABC):
         """ReAct 流式执行基类方法 — 自动推送 Thought/Action/Observation 到事件总线
 
         Phase 7: recursion_limit 从 15 提升到 25，添加空结果保护避免 ReAct 死循环
+        P1-11: 5 级智能降级（连续空结果时 Query 改写 → 换工具 → HyDE → 先验知识 → 终止）
         """
         from streaming.event_bus import (
             push_agent_thought, push_agent_action,
@@ -107,7 +125,7 @@ class BaseAgent(ABC):
 
         result_messages = []
         empty_streak = 0           # 连续空结果计数器
-        MAX_EMPTY_STREAK = 3       # 连续 3 次空结果则强制终止
+        MAX_EMPTY_STREAK = 5       # P1-11: 从 3 提升到 5，配合分级处理
 
         async for event in agent.astream(
             {"messages": [("user", user_message)]},
@@ -140,19 +158,47 @@ class BaseAgent(ABC):
                     obs = tool_msg.content[:600]
                     await push_agent_observation(agent_name, obs)
 
-                    # 检测空结果：RAG 返回 "(未检索到...)" 或空响应对同类查询多次重试
-                    is_empty = (
-                        "(未检索到" in obs
-                        or "未找到" in obs
-                        or "no results" in obs.lower()
-                        or len(obs.strip()) < 20
-                    )
+                    # P1-11: 5 级智能降级
+                    is_empty = self._is_empty_result(obs)
                     if is_empty:
                         empty_streak += 1
-                        if empty_streak >= MAX_EMPTY_STREAK:
-                            # 连续多次空结果 → 注入最终提示让 Agent 基于已有知识作答
+                        logger.warning(
+                            "[%s] 空结果 streak=%d", agent_name, empty_streak,
+                        )
+
+                        # 分级处理
+                        if empty_streak == 1:
+                            # L1: Query 改写提示
+                            await push_agent_thought(
+                                agent_name,
+                                "[系统提示] 检索未返回结果，请尝试用更短或更宽泛的关键词重新检索"
+                            )
+                        elif empty_streak == 2:
+                            # L2: 换工具提示
+                            await push_agent_thought(
+                                agent_name,
+                                "[系统提示] 仍未检索到结果，请尝试使用 cross_domain_search 工具从其他角度检索"
+                            )
+                        elif empty_streak == 3:
+                            # L3: HyDE 改写
+                            try:
+                                rewritten = await self._hyde_rewrite(user_message)
+                                await push_agent_thought(
+                                    agent_name,
+                                    f"[系统提示] 请尝试用以下改写后的查询检索: {rewritten}"
+                                )
+                            except Exception:
+                                pass
+                        elif empty_streak == 4:
+                            # L4: 用先验知识
+                            await push_agent_thought(
+                                agent_name,
+                                "[系统提示] 多次检索未果，请基于你的物理学知识直接作答，并在答案开头标注 [基于先验知识，未经文献验证]"
+                            )
+                        elif empty_streak >= MAX_EMPTY_STREAK:
+                            # L5: 终止
                             logger.warning(
-                                "[%s] 连续 %d 次工具返回空结果，强制终止 ReAct 循环",
+                                "[%s] 连续 %d 次空结果，强制终止 ReAct 循环",
                                 agent_name, empty_streak,
                             )
                             break
@@ -166,6 +212,30 @@ class BaseAgent(ABC):
                 return msg
 
         return "未能完成分析，请重试。"
+
+    def _is_empty_result(self, obs: str) -> bool:
+        """判断是否为空结果"""
+        return (
+            "(未检索到" in obs
+            or "未找到" in obs
+            or "no results" in obs.lower()
+            or "no relevant" in obs.lower()
+            or len(obs.strip()) < 20
+        )
+
+    async def _hyde_rewrite(self, original_query: str) -> str:
+        """HyDE — 生成假设性文档提取检索关键词"""
+        try:
+            # 提取原始 query 中的关键词
+            prompt = f"""请从以下研究需求中提取 3 个最关键的检索关键词，用英文逗号分隔。
+只返回关键词，不要其他内容。
+
+研究需求: {original_query[:200]}
+"""
+            response = await self.llm.ainvoke([("user", prompt)])
+            return response.content.strip()
+        except Exception:
+            return original_query[:50]
 
     def _extract_thought(self, content: str) -> str:
         """从 LLM 输出中提取 Thought 部分"""

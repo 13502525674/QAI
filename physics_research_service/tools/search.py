@@ -87,25 +87,9 @@ def symbolic_compute(expression: str) -> str:
     Returns:
         计算结果（含 LaTeX 渲染）
     """
-    try:
-        import sympy as sp
-        from sympy import symbols, simplify, diff, integrate, limit, solve, expand, factor, Matrix
-        x, y, z, t = symbols('x y z t')
-        # 安全执行：仅允许 sympy 内置函数
-        safe_dict = {
-            'x': x, 'y': y, 'z': z, 't': t,
-            'simplify': simplify, 'diff': diff, 'integrate': integrate,
-            'limit': limit, 'solve': solve, 'expand': expand, 'factor': factor,
-            'Matrix': Matrix, 'symbols': symbols,
-            'sin': sp.sin, 'cos': sp.cos, 'tan': sp.tan,
-            'exp': sp.exp, 'log': sp.log, 'sqrt': sp.sqrt,
-            'pi': sp.pi, 'E': sp.E, 'oo': sp.oo,
-        }
-        result = eval(expression, {"__builtins__": {}}, safe_dict)
-        latex_str = sp.latex(result) if hasattr(result, 'is_Matrix') or hasattr(result, 'free_symbols') else str(result)
-        return f"计算: {expression}\n结果: {result}\nLaTeX: {latex_str}"
-    except Exception as e:
-        return f"符号计算出错: {e}\n提示: 支持 simplify(x**2+2*x+1), diff(sin(x),x), integrate(x**2,x) 等"
+    # P0-5: 用 AST 安全沙箱替换 eval()
+    from tools.safe_eval import safe_symbolic_compute
+    return safe_symbolic_compute(expression)
 
 
 @tool

@@ -168,7 +168,7 @@ public class PhysicsTools {
             PhysicsPracticeRecordsService practiceRecordsService,
             PhysicsQuestionPaperService questionPaperService,
             ApeUserService userService,
-            ChatClient chatClient
+            @org.springframework.beans.factory.annotation.Qualifier("gradingChatClient") ChatClient chatClient
     ) {
         return request -> {
             try {
@@ -436,7 +436,11 @@ public class PhysicsTools {
                 );
 
                 try {
-                    String aiResponse = chatClient.prompt().user(prompt).call().content();
+                    // P1-10: 一致性保障 — temperature=0 确保评分确定性
+                    String aiResponse = chatClient.prompt()
+                        .user(prompt)
+                        .call()
+                        .content();
                     
                     // Robust JSON Extraction
                     int startIndex = aiResponse.indexOf("{");
